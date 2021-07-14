@@ -15,40 +15,45 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Completion Progress block renderer.
+ * Class for rendering user filters on the Completion Progress overview page.
  *
  * @package    block_completion_progress
- * @copyright  2020 Jonathon Fowler <fowlerj@usq.edu.au>
+ * @copyright  2021 Jonathon Fowler <fowlerj@usq.edu.au>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 namespace block_completion_progress\output;
 
-defined('MOODLE_INTERNAL') || die;
-
-use plugin_renderer_base;
-use html_writer;
+use context_course;
+use stdClass;
 
 /**
- * Completion Progress block renderer.
+ * Class for rendering user filters on the Completion Progress overview page.
  *
- * @package    block_completion_progress
- * @copyright  2020 Jonathon Fowler <fowlerj@usq.edu.au>
+ * @copyright  2021 Jonathon Fowler <fowlerj@usq.edu.au>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class renderer extends plugin_renderer_base {
-
+class overview_filter extends \core_user\output\participants_filter {
     /**
-     * Render the data required for the overview filter on the overview page.
+     * Get data for all filter types.
      *
-     * @param context $context The context of the course being displayed
-     * @param string $tableregionid The table to be updated by this filter
-     * @return string
+     * @return array
      */
-    public function overview_filter(\context $context, string $tableregionid): string {
-        $renderable = new overview_filter($context, $tableregionid);
-        $templatecontext = $renderable->export_for_template($this->output);
+    protected function get_filtertypes(): array {
+        $filtertypes = [];
 
-        return $this->output->render_from_template('core_user/participantsfilter', $templatecontext);
+        if ($filtertype = $this->get_roles_filter()) {
+            $filtertypes[] = $filtertype;
+        }
+
+        if ($filtertype = $this->get_groups_filter()) {
+            $filtertypes[] = $filtertype;
+        }
+
+        if ($filtertype = $this->get_accesssince_filter()) {
+            $filtertypes[] = $filtertype;
+        }
+
+        return $filtertypes;
     }
+
 }
