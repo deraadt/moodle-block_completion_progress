@@ -40,8 +40,8 @@ const DEFAULT_PAGE_SIZE = 20;
 const SHOW_ALL_PAGE_SIZE = 5000;
 
 // Gather form data.
-$id       = required_param('instanceid', PARAM_INT);
-$courseid = required_param('courseid', PARAM_INT);
+$id       = required_param('bid', PARAM_INT);
+$courseid = required_param('id', PARAM_INT);
 $page     = optional_param('page', 0, PARAM_INT); // Which page to show.
 $perpage  = optional_param('perpage', DEFAULT_PAGE_SIZE, PARAM_INT); // How many per page.
 $group    = optional_param('group', 0, PARAM_ALPHANUMEXT); // Group selected.
@@ -82,12 +82,11 @@ $PAGE->set_course($course);
 $PAGE->set_url(
     '/blocks/completion_progress/overview.php',
     array(
-        'instanceid' => $id,
-        'courseid'   => $courseid,
+        'bid' => $id,
+        'id'   => $courseid,
         'page'       => $page,
         'perpage'    => $perpage,
         'group'      => $group,
-        'sesskey'    => sesskey(),
         'role'       => $roleselected,
     )
 );
@@ -104,7 +103,6 @@ $PAGE->requires->css('/blocks/completion_progress/css.php?v=' . $cachevalue);
 // Check user is logged in and capable of accessing the Overview.
 require_login($course, false);
 require_capability('block/completion_progress:overview', $blockcontext);
-confirm_sesskey();
 
 $output = $PAGE->get_renderer('block_completion_progress');
 
