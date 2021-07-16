@@ -67,7 +67,7 @@ Feature: Using block completion progress for a quiz
     And I am on "Course 1" course homepage
     And I follow "Quiz 1A No deadline"
     And I press "Attempt quiz now"
-    And I follow "Finish attempt ..."
+    And I press "Finish attempt ..."
     And I press "Submit all and finish"
     And I am on "Course 1" course homepage
     When I hover ".block_completion_progress .progressBarCell:first-child" "css_element"

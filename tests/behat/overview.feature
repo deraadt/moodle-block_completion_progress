@@ -47,8 +47,7 @@ Feature: Using Completion Progress block overview
       | First question | 1    |
     Given I log in as "teacher1"
     And I am on site homepage
-    And I follow "Course 1"
-    And I turn editing mode on
+    And I am on "Course 1" course homepage with editing mode on
     And I follow "Quiz 1A No deadline"
     And I navigate to "Edit settings" in current page administration
     And I set the following fields to these values:
